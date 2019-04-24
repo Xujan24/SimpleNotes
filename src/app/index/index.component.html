@@ -1,0 +1,64 @@
+  <section class = "section header">
+        <!-- Main container -->
+        <div class="container">
+        <div class="level">
+          <!-- Left side -->
+          <div class="level-left">
+            <div class="level-item">
+              <p>
+                <strong>SimpleNotes</strong> Note taking made easy
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Side -->
+          <div class="level-right">
+            <div class="level-item">
+                <a *ngIf="fireAuthService.isLoggedIn" class="button is-small modal-button is-rounded" data-target="modal" (click)="toggleNewNoteModal()" >
+                  <span class="icon is-small">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                  <span>New Note</span>
+                </a>
+
+                <a *ngIf="!fireAuthService.isLoggedIn" class="button is-small modal-button is-rounded" data-target="login-modal" (click)="toggleLoginModal()" >
+                  <span class="icon is-small">
+                    <i class="fas fa-sign-in-alt"></i>
+                  </span>
+                  <span>Login</span>
+                </a>
+
+                <a *ngIf="fireAuthService.isLoggedIn" style = "margin-left:1rem;" class="button is-small is-rounded" (click)="logout()" >
+                    <span class="icon is-small">
+                      <i class="fas fa-sign-out-alt"></i>
+                    </span>
+                    <span>Logout</span>
+                  </a>
+            </div>
+          </div>
+          </div>
+        </div>
+  </section>
+
+
+    <section class="section" id="index-hero">
+      <div class="container">
+          <router-outlet></router-outlet>
+      </div>
+    </section>
+
+  <div class="modal" id="modal" [ngClass]="{'is-active': showNewNote}">
+      <div class="modal-background" (click)="toggleNewNoteModal()"></div>
+      <div class="modal-content">
+          <app-add-notes></app-add-notes>
+      </div>
+      <button class="modal-close is-large" aria-label="close" (click)="toggleNewNoteModal()"></button>
+  </div>
+
+  <div class="modal" id="login-modal" [ngClass]="{'is-active': showLogin}">
+    <div class="modal-background" (click)="toggleLoginModal()"></div>
+    <div class="modal-content">
+        <app-login></app-login>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="toggleLoginModal()"></button>
+  </div>

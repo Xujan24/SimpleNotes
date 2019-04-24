@@ -1,0 +1,30 @@
+
+<span *ngIf="selectedNote?.title != null">
+<p class="title is-5">{{selectedNote?.title}}</p>
+<p class=" subtitle is-7">{{selectedNote?.dateTime | firestoreDate: 'dd MMM, yyyy'}}</p>
+<p style="text-align:justify;font-size:0.9rem;">{{selectedNote?.body}}</p>
+
+<p style="margin-top: 1rem;">
+  <a *ngIf = "fireAuth.isLoggedIn" class="button is-small is-link is-rounded" style="margin-right:0.5rem;" (click)= "toggleEditNote()" data-target="edit-modal1" >
+      <span class="icon is-small">
+          <i class="far fa-edit"></i>
+        </span> &nbsp;&nbsp;
+        Edit
+  </a> 
+
+  <a class="button is-small is-link is-rounded" [routerLink]="[ '' ]">
+      <span class="icon is-small">
+          <i class="fas fa-arrow-left"></i>
+        </span> &nbsp;&nbsp;
+        Back
+  </a>
+</p>
+</span>
+
+<div class="modal" id="edit-modal1" [ngClass]="{'is-active': showEdit}">
+  <div class="modal-background" (click)="toggleEditNote()"></div>
+  <div class="modal-content">
+      <app-edit-notes [note] = "selectedNote" [id] = 'id' (showEdit) = "closeEdit($event)"></app-edit-notes>
+  </div>
+  <button class="modal-close is-large" aria-label="close" (click)="toggleEditNote()"></button>
+</div>

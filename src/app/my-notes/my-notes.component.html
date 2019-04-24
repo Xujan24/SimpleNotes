@@ -1,0 +1,151 @@
+<div class="tabs is-toggle is-toggle-rounded is-small">
+    <ul>
+      <li [ngClass]="{'is-active': activeStarred}" (click)="importantNotesClick()">
+        <a>
+          <span class="icon is-small"><i class="fas fa-star" aria-hidden="true"></i></span>
+          <span>Important Notes</span>
+        </a>
+      </li>
+      <li [ngClass]="{'is-active': !activeStarred}" (click)="allNotesClick()">
+        <a click="showAllNotes()">
+          <span class="icon is-small"><i class="fas fa-list" aria-hidden="true"></i></span>
+          <span>All Notes</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div [ngClass]="{'hideAllNotes': hideAllNotes}">
+      <span *ngIf="(notes | json) != '{}'; else emptyNotes">
+        <section class="section note-container" style="padding:0.5rem 1rem" *ngFor="let note of notes">
+          <div class = "box" style="position:relative;">
+            <div id="box">
+              <div class="level">
+                <div class="level-left">
+                  <div class="level-item">
+                    <div>
+                          <p class="title is-6" style="margin-bottom:0.5em;word-wrap: break-word;">{{note.title}}</p>
+                          <p class="title is-7" style="margin-bottom:0.5em;font-style:italic;color:rgba(0,0,0,0.4);">
+                              <span class="icon is-small">
+                                  <i class="fas fa-pencil-alt"></i>
+                                </span>
+                            {{note.dateTime | firestoreDate: 'dd MMM, yyyy'}}
+                          </p>
+                      </div>
+                  </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item" *ngIf="fireAuthService.isLoggedIn" style="position:relative;">
+                        <a (click)= "toggleEditNote(note)" data-target="edit-modal" >
+                                <span class="icon is-large">
+                                  <i class="far fa-edit"></i>
+                                </span>
+                              </a>
+                              <a (click)="deleteNote(note.id)">
+                                <span class="icon is-large" style="color:rgb(0255,0,0);">
+                                  <i class="fas fa-trash-alt"></i>
+                                </span>
+                              </a>
+                              <a (click)="toggleStar(note.id, note)">
+                                <span class="icon is-large" style="color:rgb(193, 174, 3);">
+                                  <i style="position:absolute;bottom:1.2rem;" *ngIf = "!note.starred"class="far fa-star"></i>
+                                  <i style="position:absolute;bottom:1.2rem;" *ngIf = "note.starred" class="fas fa-star"></i>
+                                </span>
+                              </a>
+                    </div>
+                  </div>
+                  
+                </div>
+                
+                <p class="subttile is-7">{{note.body | truncate: 200}} 
+                  <a [routerLink]="[ '/notes', note.id ]" class="icon is-large">
+                      <i class="fas fa-binoculars"></i></a>
+                </p>
+            </div>
+          </div>
+        </section>
+      </span>
+
+        <ng-template #emptyNotes>
+          <section class="section">
+            <p class="subtitle is-5" style="color:rgba(0,0,0,0.6);">
+              <span class="icon is-large">
+                <i class="far fa-frown"></i>
+              </span>
+              Sorry! you don't have any saved notes.
+            </p>
+          </section>
+        </ng-template>
+  </div>
+
+
+  <div [ngClass]="{'hideImportantNotes': hideImportantNotes}">
+      <span *ngIf="(importantNotes | json) != '{}'; else emptyNotes1">
+          <section class="section note-container" style="padding:0.5rem 1rem" *ngFor="let note of importantNotes">
+            <div class = "box" style="position:relative;">
+              <div id="box">
+                <div class="level">
+                  <div class="level-left">
+                    <div class="level-item">
+                      <div>
+                            <p class="title is-6" style="margin-bottom:0.5em;word-wrap: break-word;">{{note.title}}</p>
+                            <p class="title is-7" style="margin-bottom:0.5em;font-style:italic;color:rgba(0,0,0,0.4);">
+                                <span class="icon is-small">
+                                    <i class="fas fa-pencil-alt"></i>
+                                  </span>
+                              {{note.dateTime | firestoreDate: 'dd MMM, yyyy'}}
+                            </p>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                      <div class="level-item" *ngIf="fireAuthService.isLoggedIn" style="position:relative;">
+                                <a (click)= "toggleEditNote(note)" data-target="edit-modal" >
+                                  <span class="icon is-large">
+                                    <i class="far fa-edit"></i>
+                                  </span>
+                                </a>
+                                <a (click)="deleteNote(note.id)">
+                                  <span class="icon is-large" style="color:rgb(0255,0,0);">
+                                    <i class="fas fa-trash-alt"></i>
+                                  </span>
+                                </a>
+                                <a (click)="toggleStar(note.id, note)">
+                                  <span class="icon is-large" style="color:rgb(193, 174, 3);">
+                                    <i style="position:absolute;bottom:1.2rem;" *ngIf = "!note.starred"class="far fa-star"></i>
+                                    <i style="position:absolute;bottom:1.2rem;" *ngIf = "note.starred" class="fas fa-star"></i>
+                                  </span>
+                                </a>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  
+                  <p class="subttile is-7">{{note.body | truncate: 200}} 
+                    <a [routerLink]="[ '/notes', note.id ]" class="icon is-large">
+                        <i class="fas fa-binoculars"></i></a>
+                  </p>
+              </div>
+            </div>
+          </section>
+        </span>
+  
+          <ng-template #emptyNotes1>
+            <section class="section">
+              <p class="subtitle is-5" style="color:rgba(0,0,0,0.6);">
+                <span class="icon is-large">
+                  <i class="far fa-frown"></i>
+                </span>
+                Sorry! you don't have any saved notes.
+              </p>
+            </section>
+          </ng-template>
+  </div>
+
+  <div class="modal" id="edit-modal" [ngClass]="{'is-active': showEdit}">
+      <div class="modal-background" (click)="toggleEditNote()"></div>
+      <div class="modal-content">
+          <app-edit-notes [note] = "selectedNote" (showEdit) = "closeEdit($event)" ></app-edit-notes>
+      </div>
+      <button class="modal-close is-large" aria-label="close" (click)="toggleEditNote()"></button>
+    </div>

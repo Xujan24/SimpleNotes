@@ -1,0 +1,11 @@
+.control.input-form{
+    padding: 0.5em 0em;
+}
+
+.notification.hide{
+    display: none;
+}
+
+.notification.show{
+    display: block;
+}
