@@ -1,6 +1,10 @@
 # SimpleNotes
 This is a simple app which can be used for taking notes. The project uses [AngularJS](https://angular.io/) for front-end and [Firebase](https://firebase.google.com/) Cloud Firestore as back-end server. All the notes data are saved in Firebase Cloud Storage so you can access your notes from any devices with no geographical limitations. This project uses [Bulma](https://bulma.io/) to decorate the html elements.
 
+For a live demo click [here](https://notes-85edb.firebaseapp.com/notes)
+
+*(Note: Currently the app doesn't support user signup. Simply email me at punsantosh1991@outlook.com for demo user credentials*
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
 
 ## Development server
